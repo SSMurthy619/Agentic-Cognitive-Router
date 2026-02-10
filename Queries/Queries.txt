@@ -1,0 +1,25 @@
+Queries:
+
+Pure RAG:
+1) What are the premium rates for Short Period cover scale?
+2) Can we allow Liability Only policies to renew if they are short period policies?
+3) I have a Fire Insurance policy. My car caught fire on Mumbai Highway and was destroyed completely. Do I get No Claim Bonus? If yes, then how much? If No, then under what conditions?
+
+Pure SQL
+1) Give me country wise claim amount and total premium amount and the average premium by claim amount ratio, in percentage.
+ 1.A) Give me the same summary adding the year wise breakup for each country
+2) Calculate how many motor policies of Honda did not make any claim and also what's the proportion of such policies who did not claim within Honda segment.
+
+Pure Forecast
+1) Given the data, predict how much premium and no. of policies I will earn next year from Nepal region.
+2) Forecast the claims ratio for all Manufacturers for next 5 years and also provide the accuracy and other necessary evaluation metrics.
+
+Hybrid: RAG + SQL + Forecast
+1) According to the Motor Tariff Act, other than India, in which countries the motor policies can be insured?
+ 1.1) As per the Motor Tariff Act, which countries in my data are permissible to be insured the policies other than India?
+ 1.1.A) How many number of policies are there matching this
+ 1.2) Now, forecast these no. of policies increase or decrease based on the data for next 2 years (Make sure to extract year from date column and give prediction based on the year)
+
+2) get me the data for Fiat make, and impute the zeros present in the claim amount column with average claim amount column
+ 2.A) Now, use this data to predict the claim amount for a new fiat vehicle which has IDV of 10 lakhs and premium of 50 thousand.
+

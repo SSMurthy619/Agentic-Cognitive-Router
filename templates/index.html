@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VivekaMind AI</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown-light.min.css"/>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; background:#f5f7fa; margin:0; display:flex; flex-direction:column; height:100vh; }
+    .header { flex-shrink:0; display:flex; align-items:center; justify-content:center; background:#fff; padding:20px; border-bottom:1px solid #ccc; position:relative; }
+    .header img { position:absolute; left:20px; height:70px; }
+    .header h1 { font-size:28px; font-weight:bold; margin-left:90px; color:#FF7722; }
+    .chat-area { flex:1; overflow-y:auto; padding:20px; background:#fff; display:flex; flex-direction:column; align-items:center; }
+    .message-container { max-width:800px; width:100%; margin-bottom:20px; padding:15px; border-radius:8px; background:#f9f9f9; }
+    .user-message { background:#dcf8c6; }
+    .message-label { font-weight:bold; margin-bottom:6px; }
+    .markdown-body { font-size:16px; line-height:1.5; }
+    .markdown-body table { width:100%; border-collapse:collapse; margin-top:10px; }
+    .markdown-body th, .markdown-body td { border:1px solid #ccc; padding:8px; text-align:left; }
+    .markdown-body th { background:#f2f2f2; }
+    .input-box { padding:15px; border-top:1px solid #ccc; display:flex; }
+    .input-box input { flex:1; padding:12px; border:1px solid #ccc; border-radius:6px; font-size:16px; }
+    .input-box button { margin-left:10px; padding:12px 18px; background:#007bff; color:#fff; border:none; border-radius:6px; cursor:pointer; }
+    .input-box button:hover { background:#0056b3; }
+    .typing { font-style:italic; color:#555; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="data:image/png;base64,{{ logo_base64 }}" alt="Logo" />
+    <h1>VivekaMind AI</h1>
+  </div>
+  <div class="chat-area" id="chat-area"></div>
+  <div class="input-box">
+    <input type="text" id="user-input" placeholder="Ask your question here..." onkeydown="checkEnter(event)" />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    let chatHistory = [];
+
+    function renderMarkdown(text) {
+      const md = window.markdownit({ html:true, linkify:true, typographer:true });
+      return md.render(text);
+    }
+
+    function updateChatArea() {
+      const chatArea = document.getElementById('chat-area');
+      chatArea.innerHTML = '';
+      chatHistory.forEach(item => {
+        const wrap = document.createElement('div');
+        wrap.className = 'message-container';
+        if(item.sender === "You") wrap.classList.add('user-message');
+        const label = document.createElement('div');
+        label.className = 'message-label';
+        label.textContent = item.sender === "You" ? "User:" : "AI:";
+        const message = document.createElement('div');
+        message.className = 'markdown-body';
+        message.innerHTML = renderMarkdown(item.message);
+        wrap.appendChild(label);
+        wrap.appendChild(message);
+        chatArea.appendChild(wrap);
+      });
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+      const chatArea = document.getElementById('chat-area');
+      const thinkingElement = document.createElement('div');
+      thinkingElement.id = "thinking";
+      thinkingElement.className = 'message-container';
+      const label = document.createElement('div');
+      label.className = 'message-label';
+      label.textContent = "AI:";
+      const message = document.createElement('div');
+      message.className = 'markdown-body typing';
+      message.textContent = "AI is typing...";
+      thinkingElement.appendChild(label);
+      thinkingElement.appendChild(message);
+      chatArea.appendChild(thinkingElement);
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('user-input');
+      const userInput = input.value.trim();
+      if(!userInput) return;
+      input.value = '';
+
+      // Show typing indicator immediately
+      showTypingIndicator();
+
+      fetch('/ask', {
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:new URLSearchParams({'user_input':userInput, 'chat_history':JSON.stringify(chatHistory)})
+      })
+      .then(r=>r.json()).then(data=>{
+        // Remove typing indicator before updating with response
+        const typing = document.getElementById('thinking');
+        if(typing) typing.remove();
+
+        chatHistory = data.chat_history.slice(-10);
+        updateChatArea();
+      })
+      .catch(err=>{
+        console.error("Error:", err);
+        const typing = document.getElementById('thinking');
+        if(typing) typing.textContent = "⚠️ Error contacting server.";
+      });
+    }
+
+    function checkEnter(e){ if(e.key==="Enter") sendMessage(); }
+    const script=document.createElement('script');
+    script.src="https://cdn.jsdelivr.net/npm/markdown-it@13/dist/markdown-it.min.js";
+    document.head.appendChild(script);
+  </script>
+</body>
+</html>

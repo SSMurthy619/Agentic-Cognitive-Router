@@ -1,0 +1,22 @@
+# Environment files
+.env
+
+# Config file
+config.py
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyd
+
+# Virtual environment
+venv/
+
+# Chroma storage
+chroma_storage/
+
+# Misc folder
+Misc/
+
+# VSCode settings (optional but good practice)
+.vscode/
