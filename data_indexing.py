@@ -13,7 +13,7 @@ try:
 except Exception:
     pass
 
-# ========= Setup ========= #
+# ======== Setup ======== #
 embedder = SentenceTransformer(EMBED_MODEL)
 extractor = PDFExtractor()
 
