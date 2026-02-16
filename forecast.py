@@ -19,7 +19,7 @@ from config import (
     GEMINI_API_KEY, GEMINI_MODEL
 )
 
-# ========= DB Engine ========= #
+# ======= DB Engine ======= #
 def get_engine():
     url = (
         f"mysql+pymysql://{MYSQL_USER}:{quote_plus(MYSQL_PASSWORD)}"
