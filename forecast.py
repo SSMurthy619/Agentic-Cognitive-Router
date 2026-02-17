@@ -29,7 +29,7 @@ def get_engine():
 
 ENGINE = get_engine()
 
-# ========= Gemini Setup ========= #
+# ======= Gemini Setup ======= #
 genai.configure(api_key=GEMINI_API_KEY)
 _gemini = genai.GenerativeModel(GEMINI_MODEL)
 
