@@ -19,7 +19,7 @@ def get_engine() -> Engine:
     return create_engine(url, pool_pre_ping=True)
 
 ENGINE = get_engine()
-
+  
 # Gemini setup
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel(GEMINI_MODEL)
