@@ -1,4 +1,4 @@
-# forecast.py
+# forecast.py  
   
 import os
 import re
@@ -104,7 +104,7 @@ Columns:
 NEG_SYNONYMS = {"no","n","false","0","non","non-zero dep","non zero dep","nonzerodep","without","exclude","excluding"}
 POS_SYNONYMS = {"yes","y","true","1","zero dep","zerodep","fraud","with","include","including"}
 
-# ========= Helpers ========= #
+# ======= Helpers ======= #
 def _format_history(history):
     convo = []
     for h in history[-10:]:
