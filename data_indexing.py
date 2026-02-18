@@ -1,5 +1,3 @@
-# data_indexing.py — clean rebuild-safe version
-   
 import os
 import shutil
 import chromadb
