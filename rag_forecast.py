@@ -24,9 +24,9 @@ chroma = chromadb.PersistentClient(path=CHROMA_DIR)
 collection = chroma.get_or_create_collection(CHROMA_COLLECTION)
 embedder = SentenceTransformer(EMBED_MODEL)
 
-# ==========================
+# =====
 # Helpers
-# ==========================
+# =====
 def _format_history(history):
     convo = []
     for h in history[-10:]:
