@@ -65,9 +65,9 @@ def _metrics_report(y_true, y_pred) -> dict:
         "sMAPE%": round(smape, 2)
     }
 
-# ==========================
+# ========
 # RAG
-# ==========================
+# ========
 def query_rag(user_query: str, top_k: int = 5):
     q_emb = embedder.encode([user_query], convert_to_numpy=True).tolist()
     res = collection.query(
