@@ -233,9 +233,9 @@ def run_rag_forecast(user_query: str, history=None) -> dict:
         "ModuleUsed": "RAG + Forecast"
     }
 
-# ==========================
+# ==========
 # CLI
-# ==========================
+# ==========
 if __name__ == "__main__":
     chat_history = []
     while True:
