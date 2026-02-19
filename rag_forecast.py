@@ -13,9 +13,8 @@ from config import (
     CHROMA_DIR, CHROMA_COLLECTION, EMBED_MODEL
 )
 
-# ==========================
 # DB + Vector Setup
-# ==========================
+
 engine = create_engine(
     f"mysql+pymysql://{MYSQL_USER}:{quote_plus(MYSQL_PASSWORD)}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}?charset=utf8mb4",
     pool_pre_ping=True, pool_recycle=1800
