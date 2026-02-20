@@ -34,11 +34,11 @@ def build_index(force_rebuild: bool = False):
         stored_dim = meta.get("embedding_dimension")
 
         if count > 0 and stored_dim == embedder.get_sentence_embedding_dimension():
-            print(f"✅ Reusing existing collection '{CHROMA_COLLECTION}' with {count} chunks "
+            print(f"Reusing existing collection '{CHROMA_COLLECTION}' with {count} chunks "
                   f"(dim={stored_dim}).")
             return
         else:
-            print("⚠️ Embedding mismatch or empty collection → rebuilding index.")
+            print("Embedding mismatch or empty collection → rebuilding index.")
             chroma.delete_collection(CHROMA_COLLECTION)
     except Exception:
         # Collection doesn't exist yet
@@ -52,7 +52,7 @@ def build_index(force_rebuild: bool = False):
 
     docs = extractor.load_all_pdfs_from_folder(POLICY_DOCS_PATH)
     if not docs:
-        print("⚠️ No documents found in PDF folder.")
+        print("No documents found in PDF folder.")
         return
 
     print(f"Encoding {len(docs)} chunks with {EMBED_MODEL} "
@@ -68,7 +68,7 @@ def build_index(force_rebuild: bool = False):
         metadatas=[{"id": f"chunk_{i}"} for i in range(len(texts))]
     )
 
-    print(f"✅ Indexed {len(texts)} chunks into '{CHROMA_COLLECTION}' at {CHROMA_DIR}")
+    print(f"Indexed {len(texts)} chunks into '{CHROMA_COLLECTION}' at {CHROMA_DIR}")
 
 if __name__ == "__main__":
     # Force rebuild recommended when switching embed models
