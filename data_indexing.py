@@ -22,7 +22,7 @@ def build_index(force_rebuild: bool = False):
     """
     # Always nuke collection if forced OR if embedding dims mismatch
     if force_rebuild and os.path.exists(CHROMA_DIR):
-        print(f"🗑️ Removing old Chroma DB at {CHROMA_DIR} ...")
+        print(f"Removing old Chroma DB at {CHROMA_DIR} ...")
         shutil.rmtree(CHROMA_DIR)
 
     chroma = chromadb.PersistentClient(path=CHROMA_DIR)
