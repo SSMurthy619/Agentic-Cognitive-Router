@@ -88,7 +88,7 @@ if __name__ == "__main__":
     folder = input("Enter folder path with PDFs: ").strip()
     extractor = PDFExtractor()
     docs = extractor.load_all_pdfs_from_folder(folder)
-    print(f"✅ Extracted {len(docs)} chunks")
+    print(f"Extracted {len(docs)} chunks")
     for d in docs[:3]:
         print("----")
         print(d.text[:400], "...")
